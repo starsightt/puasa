@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan 1447H</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #d4af37;
+            --accent-light: #f4e4bc;
+            --glass: rgba(15, 23, 42, 0.7);
+        }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        
+        .luxury-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 50%, #d4af37 100%);
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .text-gold {
+            color: #d4af37;
+        }
+        
+        .border-gold {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        
+        .bg-gold {
+            background-color: #d4af37;
+        }
+        
+        .timer-digit {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+        
+        .elegant-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 
+                        0 0 0 1px rgba(212, 175, 55, 0.1);
+        }
+        
+        .nav-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-item.active {
+            color: #d4af37;
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+        }
+        
+        .checkbox-luxury {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            background: transparent;
+        }
+        
+        .checkbox-luxury:checked {
+            background: #d4af37;
+            border-color: #d4af37;
+        }
+        
+        .checkbox-luxury:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid #0f172a;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.875rem;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .calendar-day.active {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: #d4af37;
+        }
+        
+        .calendar-day.today {
+            background: #d4af37;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        
+        .calendar-day.has-data::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 4px;
+            height: 4px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .memory-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+        
+        .expandable-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .expandable-text.expanded {
+            -webkit-line-clamp: unset;
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        .status-missed {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Main Container -->
+    <div class="max-w-md mx-auto min-h-screen pb-24 relative overflow-hidden">
+        
+        <!-- Decorative Elements -->
+        <div class="fixed top-0 left-0 w-full h-96 bg-gradient-to-b from-amber-900/20 to-transparent pointer-events-none"></div>
+        <div class="fixed top-20 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="fixed bottom-40 left-0 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Header -->
+        <header class="relative z-10 pt-12 pb-6 px-6 text-center">
+            <p class="text-gold text-xs tracking-[0.3em] uppercase mb-2 font-medium">Ramadan 1447 H</p>
+            <h1 class="font-serif text-3xl text-white italic mb-1" id="current-date">18 Februari 2026</h1>
+            <p class="text-slate-400 text-sm" id="ramadan-day">Hari ke-1</p>
+        </header>
+
+        <!-- PAGE 1: HOME -->
+        <main id="page-home" class="page-content px-6 space-y-6 fade-in">
+            
+            <!-- Prayer Countdown Timer -->
+            <div class="glass-card rounded-3xl p-6 elegant-shadow relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl"></div>
+                
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Selanjutnya</p>
+                        <h2 class="text-2xl font-serif text-white" id="next-prayer-name">Maghrib</h2>
+                        <p class="text-gold text-sm mt-1" id="prayer-time">18:12</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-900">
+                        <i class="fas fa-moon" id="prayer-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="glass-panel rounded-2xl p-3">
+                        <span class="block text-2xl font-bold text-white timer-digit" id="countdown-hours">00</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Jam</span>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-3">
+                        <span class="block text-2xl font-bold text-white timer-digit" id="countdown-minutes">00</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Menit</span>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-3">
+                        <span class="block text-2xl font-bold text-white timer-digit" id="countdown-seconds">00</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Detik</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Progress -->
+            <div class="glass-card rounded-3xl p-6 elegant-shadow">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h3 class="font-serif text-xl text-white">Target Harian</h3>
+                        <p class="text-slate-400 text-xs mt-1">Minimal 500 poin • Target 1000 poin</p>
+                    </div>
+                    <div class="relative w-16 h-16">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <path id="progress-circle" class="text-gold progress-ring-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center text-sm font-bold text-white" id="progress-percent">0%</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-slate-400">Progress</span>
+                    <span class="text-gold font-semibold"><span id="current-points">0</span> / 1000 poin</span>
+                </div>
+                <div class="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-700" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Amalan Form -->
+            <div class="space-y-4">
+                
+                <!-- Puasa -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-amber-500/50">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center text-amber-400">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium">Puasa</h4>
+                                <p class="text-xs text-slate-400">+100 poin</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="puasa" value="full" class="w-4 h-4 accent-amber-500" onchange="updateAmalan()">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Puasa full</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="radio" name="puasa" value="tidak" class="w-4 h-4 accent-amber-500" onchange="updateAmalan()">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Tidak puasa (haid/sakit/dll)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Sholat Wajib -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-blue-500/50">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 flex items-center justify-center text-blue-400">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Sholat Fardhu</h4>
+                            <p class="text-xs text-slate-400">+20 poin/waktu</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-5 gap-2">
+                        <label class="flex flex-col items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="checkbox-luxury" id="sholat-subuh" onchange="updateAmalan()">
+                            <span class="text-[10px] text-slate-400">Subuh</span>
+                        </label>
+                        <label class="flex flex-col items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="checkbox-luxury" id="sholat-dzuhur" onchange="updateAmalan()">
+                            <span class="text-[10px] text-slate-400">Dzuhur</span>
+                        </label>
+                        <label class="flex flex-col items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="checkbox-luxury" id="sholat-ashar" onchange="updateAmalan()">
+                            <span class="text-[10px] text-slate-400">Ashar</span>
+                        </label>
+                        <label class="flex flex-col items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="checkbox-luxury" id="sholat-maghrib" onchange="updateAmalan()">
+                            <span class="text-[10px] text-slate-400">Maghrib</span>
+                        </label>
+                        <label class="flex flex-col items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="checkbox-luxury" id="sholat-isya" onchange="updateAmalan()">
+                            <span class="text-[10px] text-slate-400">Isya</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Sholat Sunnah -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-emerald-500/50">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center text-emerald-400">
+                            <i class="fas fa-praying-hands"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Sholat Sunnah</h4>
+                            <p class="text-xs text-slate-400">Pahala berlipat</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Rawatib Qabliyah & Ba'diyah</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400">+50</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-rawatib" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Dhuha (2-12 rakaat)</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400">+30</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-dhuha" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Tahajud</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400">+100</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-tahajud" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Tarawih</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400">+100</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-tarawih" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Witir</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400">+40</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-witir" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Ngaji -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-purple-500/50">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 flex items-center justify-center text-purple-400">
+                            <i class="fas fa-book-quran"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Tilawah Quran</h4>
+                            <p class="text-xs text-slate-400">+2 poin/ayat</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-slate-400 block mb-1">Surat Awal</label>
+                                <select id="ngaji-surat-awal" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-500/50 focus:outline-none" onchange="updateAmalan()">
+                                    <option value="">Pilih Surat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 block mb-1">Ayat Awal</label>
+                                <input type="number" id="ngaji-ayat-awal" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-500/50 focus:outline-none" placeholder="1" onchange="updateAmalan()">
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-center">
+                            <span class="text-slate-500 text-xs">sampai</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-slate-400 block mb-1">Surat Akhir</label>
+                                <select id="ngaji-surat-akhir" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-500/50 focus:outline-none" onchange="updateAmalan()">
+                                    <option value="">Sama dengan awal</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-400 block mb-1">Ayat Akhir</label>
+                                <input type="number" id="ngaji-ayat-akhir" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-500/50 focus:outline-none" placeholder="7" onchange="updateAmalan()">
+                            </div>
+                        </div>
+                        
+                        <p class="text-xs text-purple-400 text-right" id="ngaji-total">0 ayat • 0 poin</p>
+                    </div>
+                </div>
+
+                <!-- Lainnya -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-rose-500/50">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500/20 to-rose-600/10 flex items-center justify-center text-rose-400">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Amalan Lain</h4>
+                            <p class="text-xs text-slate-400">Kebaikan tambahan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300">Dzikir pagi & petang</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-rose-400">+40</span>
+                                <input type="checkbox" class="checkbox-luxury" id="lain-dzikir" onchange="updateAmalan()">
+                            </div>
+                        </label>
+                        <div class="flex items-center justify-between p-2">
+                            <span class="text-sm text-slate-300">Infaq/Sedekah</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-rose-400">+1/1000</span>
+                                <input type="number" id="lain-infaq" class="w-24 bg-slate-800/50 border border-slate-700 rounded-lg px-2 py-1 text-sm text-white focus:border-amber-500/50 focus:outline-none text-right" placeholder="Rp" onchange="updateAmalan()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="saveDay()" class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-900 font-bold rounded-2xl shadow-lg shadow-amber-500/25 transform active:scale-[0.98] transition-all hover:shadow-amber-500/40">
+                    Simpan Amalan Hari Ini
+                </button>
+            </div>
+        </main>
+
+        <!-- PAGE 2: TODO -->
+        <main id="page-todo" class="page-content px-6 space-y-6 hidden">
+            
+            <!-- Active Todos -->
+            <div>
+                <h3 class="font-serif text-xl text-white mb-4">Aktivitas Hari Ini</h3>
+                <div id="todo-active-list" class="space-y-3">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Add New -->
+            <button onclick="openTodoModal()" class="w-full py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:border-amber-500/50 hover:text-amber-400 transition flex items-center justify-center gap-2">
+                <i class="fas fa-plus"></i>
+                <span>Tambah Aktivitas</span>
+            </button>
+
+            <!-- Completed -->
+            <div id="todo-completed-section" class="hidden">
+                <h3 class="font-serif text-xl text-white mb-4 mt-8">Selesai</h3>
+                <div id="todo-completed-list" class="space-y-3 opacity-60">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </main>
+
+        <!-- PAGE 3: PROFILE -->
+        <main id="page-profile" class="page-content px-6 space-y-6 hidden">
+            
+            <!-- Profile Card -->
+            <div class="glass-card rounded-3xl p-6 text-center elegant-shadow">
+                <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 p-0.5">
+                    <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-user text-3xl text-slate-600"></i>
+                    </div>
+                </div>
+                <h2 class="font-serif text-2xl text-white mb-1">Profile</h2>
+                <p class="text-slate-400 text-sm">Pebulan Puasa</p>
+                
+                <div class="grid grid-cols-3 gap-4 mt-6">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-gold" id="profile-total-days">0</p>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Hari</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-gold" id="profile-avg-score">0</p>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Rata-rata</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-gold" id="profile-best-score">0</p>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Terbaik</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div class="glass-card rounded-3xl p-6 elegant-shadow">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-serif text-lg text-white">Kalender Ramadan</h3>
+                    <div class="flex gap-2">
+                        <button onclick="changeMonth(-1)" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                        </button>
+                        <span class="text-sm text-slate-300 self-center" id="calendar-month">Februari 2026</span>
+                        <button onclick="changeMonth(1)" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition">
+                            <i class="fas fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-7 gap-1 mb-2">
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Ah</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Se</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Se</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Ra</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Ka</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Ju</span>
+                    <span class="text-center text-[10px] text-slate-500 uppercase">Sa</span>
+                </div>
+                
+                <div class="grid grid-cols-7 gap-1" id="calendar-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Memories -->
+            <div>
+                <h3 class="font-serif text-xl text-white mb-4">Kenangan</h3>
+                <div id="memories-list" class="space-y-4">
+                    <!-- Populated by JS -->
+                </div>
+                
+                <button onclick="document.getElementById('memory-input').click()" class="w-full mt-4 py-3 bg-slate-800 rounded-xl text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-2">
+                    <i class="fas fa-camera"></i>
+                    <span>Tambah Kenangan</span>
+                </button>
+                <input type="file" id="memory-input" class="hidden" accept="image/*" onchange="handleMemoryUpload(this)">
+            </div>
+        </main>
+
+        <!-- Todo Detail Modal -->
+        <div id="todo-modal" class="fixed inset-0 z-50 hidden">
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeTodoModal()"></div>
+            <div class="absolute bottom-0 left-0 right-0 bg-slate-900 rounded-t-3xl p-6 max-w-md mx-auto slide-up max-h-[90vh] overflow-y-auto">
+                <div class="w-12 h-1 bg-slate-700 rounded-full mx-auto mb-6"></div>
+                
+                <h3 class="font-serif text-2xl text-white mb-6">Tambah Aktivitas</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2">Judul</label>
+                        <input type="text" id="todo-title" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-amber-500/50 focus:outline-none" placeholder="Contoh: Workout HIIT">
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2">Kategori</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="todo-category" value="workout" class="hidden peer" checked>
+                                <div class="p-3 rounded-xl border border-slate-700 text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition">
+                                    <i class="fas fa-dumbbell text-amber-400 mb-1"></i>
+                                    <p class="text-xs text-slate-300">Workout</p>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="todo-category" value="reading" class="hidden peer">
+                                <div class="p-3 rounded-xl border border-slate-700 text-center peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition">
+                                    <i class="fas fa-book text-blue-400 mb-1"></i>
+                                    <p class="text-xs text-slate-300">Bacaan</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2">Target Poin</label>
+                        <input type="number" id="todo-points" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-amber-500/50 focus:outline-none" value="20">
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2">Deskripsi</label>
+                        <textarea id="todo-desc" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-amber-500/50 focus:outline-none resize-none" placeholder="Detail aktivitas..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2">Foto (Opsional)</label>
+                        <div class="grid grid-cols-4 gap-2" id="todo-photos-preview"></div>
+                        <label class="mt-2 flex items-center justify-center w-full h-20 border-2 border-dashed border-slate-700 rounded-xl cursor-pointer hover:border-amber-500/50 transition">
+                            <i class="fas fa-plus text-slate-500"></i>
+                            <input type="file" class="hidden" accept="image/*" multiple onchange="previewTodoPhotos(this)">
+                        </label>
+                    </div>
+                </div>
+                
+                <button onclick="saveTodo()" class="w-full mt-6 py-4 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-900 font-bold rounded-xl">
+                    Simpan Aktivitas
+                </button>
+            </div>
+        </div>
+
+        <!-- Day Detail Modal -->
+        <div id="day-modal" class="fixed inset-0 z-50 hidden">
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDayModal()"></div>
+            <div class="absolute inset-x-0 top-20 bottom-0 bg-slate-900 rounded-t-3xl p-6 max-w-md mx-auto slide-up overflow-y-auto">
+                <div class="w-12 h-1 bg-slate-700 rounded-full mx-auto mb-6"></div>
+                
+                <h3 class="font-serif text-2xl text-white mb-2" id="day-modal-title">18 Februari 2026</h3>
+                <p class="text-gold text-sm mb-6" id="day-modal-score">850 poin</p>
+                
+                <div id="day-modal-content" class="space-y-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 px-8 py-4 z-40 max-w-md mx-auto">
+            <div class="flex justify-around items-center">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-item active relative flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="text-[10px]">Home</span>
+                </button>
+                <button onclick="switchTab('todo')" id="nav-todo" class="nav-item relative flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+                    <i class="fas fa-check-circle text-lg"></i>
+                    <span class="text-[10px]">To-Do</span>
+                </button>
+                <button onclick="switchTab('profile')" id="nav-profile" class="nav-item relative flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="text-[10px]">Profile</span>
+                </button>
+            </div>
+        </nav>
+
+    </div>
+
+    <script>
+        // Data
+        let appData = {
+            history: {},
+            todos: [],
+            memories: [],
+            currentDate: new Date('2026-02-18')
+        };
+        
+        let currentMonth = new Date('2026-02-18');
+        let todoPhotosBuffer = [];
+        
+        // Surat data
+        const suratList = [
+            {name: "Al-Fatihah", ayat: 7}, {name: "Al-Baqarah", ayat: 286}, {name: "Ali Imran", ayat: 200},
+            {name: "An-Nisa", ayat: 176}, {name: "Al-Ma'idah", ayat: 120}, {name: "Al-An'am", ayat: 165},
+            {name: "Al-A'raf", ayat: 206}, {name: "Al-Anfal", ayat: 75}, {name: "At-Taubah", ayat: 129},
+            {name: "Yunus", ayat: 109}, {name: "Hud", ayat: 123}, {name: "Yusuf", ayat: 111},
+            {name: "Ar-Ra'd", ayat: 43}, {name: "Ibrahim", ayat: 52}, {name: "Al-Hijr", ayat: 99},
+            {name: "An-Nahl", ayat: 128}, {name: "Al-Isra", ayat: 111}, {name: "Al-Kahf", ayat: 110},
+            {name: "Maryam", ayat: 98}, {name: "Taha", ayat: 135}, {name: "Al-Anbiya", ayat: 112},
+            {name: "Al-Hajj", ayat: 78}, {name: "Al-Mu'minun", ayat: 118}, {name: "An-Nur", ayat: 64},
+            {name: "Al-Furqan", ayat: 77}, {name: "Asy-Syu'ara", ayat: 227}, {name: "An-Naml", ayat: 93},
+            {name: "Al-Qasas", ayat: 88}, {name: "Al-'Ankabut", ayat: 69}, {name: "Ar-Rum", ayat: 60}
+        ];
+        
+        // Prayer times for Baros, Sukabumi (approximate)
+        const prayerTimes = {
+            subuh: '04:38',
+            dzuhur: '12:05',
+            ashar: '15:15',
+            maghrib: '18:12',
+            isya: '19:22'
+        };
+        
+        // Init
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            populateSuratOptions();
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            renderTodos();
+            renderCalendar();
+            renderMemories();
+            updateProfile();
+            
+            // Set today's date
+            const today = new Date('2026-02-18');
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('current-date').textContent = today.toLocaleDateString('id-ID', options);
+        });
+        
+        function populateSuratOptions() {
+            const awal = document.getElementById('ngaji-surat-awal');
+            const akhir = document.getElementById('ngaji-surat-akhir');
+            
+            suratList.forEach(function(s, i) {
+                const opt1 = new Option((i+1) + '. ' + s.name, i);
+                const opt2 = new Option((i+1) + '. ' + s.name, i);
+                awal.add(opt1);
+                akhir.add(opt2);
+            });
+        }
+        
+        function updateTimer() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            // Parse prayer times to minutes
+            const times = [
+                { name: 'Subuh', time: prayerTimes.subuh, icon: 'fa-sun', minutes: parseTime(prayerTimes.subuh) },
+                { name: 'Dzuhur', time: prayerTimes.dzuhur, icon: 'fa-sun', minutes: parseTime(prayerTimes.dzuhur) },
+                { name: 'Ashar', time: prayerTimes.ashar, icon: 'fa-cloud-sun', minutes: parseTime(prayerTimes.ashar) },
+                { name: 'Maghrib', time: prayerTimes.maghrib, icon: 'fa-moon', minutes: parseTime(prayerTimes.maghrib) },
+                { name: 'Isya', time: prayerTimes.isya, icon: 'fa-star', minutes: parseTime(prayerTimes.isya) }
+            ];
+            
+            // Find next prayer
+            let nextPrayer = times.find(function(t) { return t.minutes > currentTime; });
+            if (!nextPrayer) nextPrayer = times[0]; // Tomorrow's subuh
+            
+            document.getElementById('next-prayer-name').textContent = nextPrayer.name;
+            document.getElementById('prayer-time').textContent = nextPrayer.time;
+            document.getElementById('prayer-icon').className = 'fas ' + nextPrayer.icon;
+            
+            // Calculate countdown
+            let diff = nextPrayer.minutes - currentTime;
+            if (diff < 0) diff += 24 * 60; // Next day
+            
+            const hours = Math.floor(diff / 60);
+            const minutes = diff % 60;
+            const seconds = 59 - now.getSeconds();
+            
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        function parseTime(timeStr) {
+            const [h, m] = timeStr.split(':').map(Number);
+            return h * 60 + m;
+        }
+        
+        function updateAmalan() {
+            let total = 0;
+            
+            // Puasa
+            const puasa = document.querySelector('input[name="puasa"]:checked');
+            if (puasa && puasa.value === 'full') total += 100;
+            
+            // Sholat wajib
+            ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'].forEach(function(w) {
+                if (document.getElementById('sholat-' + w).checked) total += 20;
+            });
+            
+            // Sunnah
+            if (document.getElementById('sunnah-rawatib').checked) total += 50;
+            if (document.getElementById('sunnah-dhuha').checked) total += 30;
+            if (document.getElementById('sunnah-tahajud').checked) total += 100;
+            if (document.getElementById('sunnah-tarawih').checked) total += 100;
+            if (document.getElementById('sunnah-witir').checked) total += 40;
+            
+            // Ngaji
+            const suratAwal = parseInt(document.getElementById('ngaji-surat-awal').value);
+            const ayatAwal = parseInt(document.getElementById('ngaji-ayat-awal').value) || 0;
+            const suratAkhir = document.getElementById('ngaji-surat-akhir').value;
+            const ayatAkhir = parseInt(document.getElementById('ngaji-ayat-akhir').value) || 0;
+            
+            if (!isNaN(suratAwal) && ayatAwal > 0 && ayatAkhir > 0) {
+                let ayatCount = 0;
+                
+                if (!suratAkhir || suratAkhir === '' || parseInt(suratAkhir) === suratAwal) {
+                    // Same surat
+                    ayatCount = ayatAkhir - ayatAwal + 1;
+                } else {
+                    // Different surat
+                    const sAkhir = parseInt(suratAkhir);
+                    // Add remaining ayats from first surat
+                    ayatCount += suratList[suratAwal].ayat - ayatAwal + 1;
+                    // Add full surats in between
+                    for (let i = suratAwal + 1; i < sAkhir; i++) {
+                        ayatCount += suratList[i].ayat;
+                    }
+                    // Add ayats from last surat
+                    ayatCount += ayatAkhir;
+                }
+                
+                const ngajiPoints = Math.min(ayatCount * 2, 200); // Cap at 200
+                total += ngajiPoints;
+                document.getElementById('ngaji-total').textContent = ayatCount + ' ayat • ' + ngajiPoints + ' poin';
+            }
+            
+            // Lainnya
+            if (document.getElementById('lain-dzikir').checked) total += 40;
+            const infaq = parseInt(document.getElementById('lain-infaq').value) || 0;
+            total += Math.floor(infaq / 1000);
+            
+            // Update UI
+            document.getElementById('current-points').textContent = total;
+            const percent = Math.min((total / 1000) * 100, 100);
+            document.getElementById('progress-percent').textContent = Math.floor(percent) + '%';
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-circle').setAttribute('stroke-dasharray', percent + ', 100');
+        }
+        
+        function saveDay() {
+            const dateStr = appData.currentDate.toDateString();
+            
+            const dayData = {
+                date: dateStr,
+                score: parseInt(document.getElementById('current-points').textContent),
+                puasa: document.querySelector('input[name="puasa"]:checked')?.value || 'tidak',
+                sholat: {
+                    subuh: document.getElementById('sholat-subuh').checked,
+                    dzuhur: document.getElementById('sholat-dzuhur').checked,
+                    ashar: document.getElementById('sholat-ashar').checked,
+                    maghrib: document.getElementById('sholat-maghrib').checked,
+                    isya: document.getElementById('sholat-isya').checked
+                },
+                sunnah: {
+                    rawatib: document.getElementById('sunnah-rawatib').checked,
+                    dhuha: document.getElementById('sunnah-dhuha').checked,
+                    tahajud: document.getElementById('sunnah-tahajud').checked,
+                    tarawih: document.getElementById('sunnah-tarawih').checked,
+                    witir: document.getElementById('sunnah-witir').checked
+                },
+                ngaji: {
+                    suratAwal: document.getElementById('ngaji-surat-awal').value,
+                    ayatAwal: document.getElementById('ngaji-ayat-awal').value,
+                    suratAkhir: document.getElementById('ngaji-surat-akhir').value,
+                    ayatAkhir: document.getElementById('ngaji-ayat-akhir').value
+                },
+                lain: {
+                    dzikir: document.getElementById('lain-dzikir').checked,
+                    infaq: document.getElementById('lain-infaq').value
+                }
+            };
+            
+            appData.history[dateStr] = dayData;
+            saveData();
+            renderCalendar();
+            updateProfile();
+            
+            // Show success animation
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Tersimpan';
+            btn.classList.add('bg-emerald-600');
+            setTimeout(function() {
+                btn.textContent = originalText;
+                btn.classList.remove('bg-emerald-600');
+            }, 2000);
+        }
+        
+        // Todo Functions
+        function openTodoModal() {
+            document.getElementById('todo-modal').classList.remove('hidden');
+            todoPhotosBuffer = [];
+        }
+        
+        function closeTodoModal() {
+            document.getElementById('todo-modal').classList.add('hidden');
+            // Reset form
+            document.getElementById('todo-title').value = '';
+            document.getElementById('todo-desc').value = '';
+            document.getElementById('todo-points').value = '20';
+            document.getElementById('todo-photos-preview').innerHTML = '';
+            todoPhotosBuffer = [];
+        }
+        
+        function previewTodoPhotos(input) {
+            const files = input.files;
+            const preview = document.getElementById('todo-photos-preview');
+            
+            Array.from(files).forEach(function(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    todoPhotosBuffer.push(e.target.result);
+                    const div = document.createElement('div');
+                    div.className = 'aspect-square rounded-lg overflow-hidden bg-slate-800';
+                    div.innerHTML = '<img src="' + e.target.result + '" class="w-full h-full object-cover">';
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function saveTodo() {
+            const title = document.getElementById('todo-title').value;
+            const category = document.querySelector('input[name="todo-category"]:checked').value;
+            const points = parseInt(document.getElementById('todo-points').value) || 20;
+            const desc = document.getElementById('todo-desc').value;
+            
+            if (!title) return;
+            
+            const todo = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                points: points,
+                description: desc,
+                photos: todoPhotosBuffer,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.todos.push(todo);
+            saveData();
+            renderTodos();
+            closeTodoModal();
+        }
+        
+        function renderTodos() {
+            const activeList = document.getElementById('todo-active-list');
+            const completedList = document.getElementById('todo-completed-list');
+            const completedSection = document.getElementById('todo-completed-section');
+            
+            activeList.innerHTML = '';
+            completedList.innerHTML = '';
+            
+            let hasCompleted = false;
+            
+            appData.todos.forEach(function(todo) {
+                const item = document.createElement('div');
+                const isWorkout = todo.category === 'workout';
+                const accentColor = isWorkout ? 'amber' : 'blue';
+                const icon = isWorkout ? 'fa-dumbbell' : 'fa-book';
+                
+                item.className = 'glass-card rounded-2xl p-4 border-l-4 border-l-' + accentColor + '-500/50 cursor-pointer hover:bg-slate-800/50 transition';
+                item.onclick = function(e) {
+                    if (e.target.type !== 'checkbox') {
+                        toggleTodoDetail(todo.id);
+                    }
+                };
+                
+                item.innerHTML = 
+                    '<div class="flex items-start gap-3">' +
+                        '<div class="w-10 h-10 rounded-xl bg-' + accentColor + '-500/20 flex items-center justify-center text-' + accentColor + '-400 flex-shrink-0">' +
+                            '<i class="fas ' + icon + '"></i>' +
+                        '</div>' +
+                        '<div class="flex-1 min-w-0">' +
+                            '<div class="flex justify-between items-start">' +
+                                '<h4 class="text-white font-medium truncate">' + todo.title + '</h4>' +
+                                '<span class="text-xs text-' + accentColor + '-400">+' + todo.points + '</span>' +
+                            '</div>' +
+                            (todo.description ? '<p class="text-xs text-slate-400 mt-1 line-clamp-2">' + todo.description + '</p>' : '') +
+                            (todo.photos.length > 0 ? '<p class="text-[10px] text-slate-500 mt-2"><i class="fas fa-image mr-1"></i>' + todo.photos.length + ' foto</p>' : '') +
+                        '</div>' +
+                        '<input type="checkbox" ' + (todo.completed ? 'checked' : '') + ' onchange="toggleTodo(' + todo.id + ')" class="checkbox-luxury mt-1">' +
+                    '</div>';
+                
+                if (todo.completed) {
+                    completedList.appendChild(item);
+                    hasCompleted = true;
+                } else {
+                    activeList.appendChild(item);
+                }
+            });
+            
+            completedSection.classList.toggle('hidden', !hasCompleted);
+        }
+        
+        function toggleTodo(id) {
+            const todo = appData.todos.find(function(t) { return t.id === id; });
+            if (todo) {
+                todo.completed = !todo.completed;
+                saveData();
+                renderTodos();
+            }
+        }
+        
+        function toggleTodoDetail(id) {
+            // Could expand to show full detail view
+            console.log('Show detail for todo:', id);
+        }
+        
+        // Calendar Functions
+        function renderCalendar() {
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+            
+            document.getElementById('calendar-month').textContent = 
+                currentMonth.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            
+            // Empty cells for days before
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+            
+            // Days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dateStr = date.toDateString();
+                const dayData = appData.history[dateStr];
+                const isToday = date.toDateString() === new Date('2026-02-18').toDateString();
+                
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day ' + (isToday ? 'today' : '') + (dayData ? ' has-data' : '');
+                cell.textContent = day;
+                
+                if (dayData) {
+                    cell.classList.add('active');
+                    cell.onclick = function() { openDayModal(dateStr); };
+                }
+                
+                grid.appendChild(cell);
+            }
+        }
+        
+        function changeMonth(delta) {
+            currentMonth.setMonth(currentMonth.getMonth() + delta);
+            renderCalendar();
+        }
+        
+        function openDayModal(dateStr) {
+            const data = appData.history[dateStr];
+            if (!data) return;
+            
+            const date = new Date(dateStr);
+            document.getElementById('day-modal-title').textContent = 
+                date.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('day-modal-score').textContent = data.score + ' poin';
+            
+            const content = document.getElementById('day-modal-content');
+            content.innerHTML = '';
+            
+            // Puasa
+            const puasaStatus = data.puasa === 'full' ? 
+                '<span class="status-badge status-completed"><i class="fas fa-check"></i> Puasa Full</span>' :
+                '<span class="status-badge status-missed"><i class="fas fa-times"></i> Tidak Puasa</span>';
+            content.innerHTML += '<div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl"><span class="text-slate-300">Puasa</span>' + puasaStatus + '</div>';
+            
+            // Sholat
+            const sholatList = [];
+            if (data.sholat.subuh) sholatList.push('Subuh');
+            if (data.sholat.dzuhur) sholatList.push('Dzuhur');
+            if (data.sholat.ashar) sholatList.push('Ashar');
+            if (data.sholat.maghrib) sholatList.push('Maghrib');
+            if (data.sholat.isya) sholatList.push('Isya');
+            
+            const sholatHtml = sholatList.length === 5 ? 
+                '<span class="status-badge status-completed">Lengkap (5 waktu)</span>' :
+                '<span class="status-badge status-pending">' + sholatList.length + '/5 waktu</span>';
+            content.innerHTML += '<div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-xl"><span class="text-slate-300">Sholat Wajib</span>' + sholatHtml + '</div>';
+            
+            // Sunnah
+            const sunnahList = [];
+            if (data.sunnah.rawatib) sunnahList.push('Rawatib');
+            if (data.sunnah.dhuha) sunnahList.push('Dhuha');
+            if (data.sunnah.tahajud) sunnahList.push('Tahajud');
+            if (data.sunnah.tarawih) sunnahList.push('Tarawih');
+            if (data.sunnah.witir) sunnahList.push('Witir');
+            
+            if (sunnahList.length > 0) {
+                content.innerHTML += '<div class="p-3 bg-slate-800/50 rounded-xl"><p class="text-slate-400 text-xs mb-2">Sunnah</p><div class="flex flex-wrap gap-2">' + 
+                    sunnahList.map(function(s) { return '<span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">' + s + '</span>'; }).join('') + 
+                    '</div></div>';
+            }
+            
+            // Ngaji
+            if (data.ngaji.suratAwal) {
+                const suratAwal = suratList[parseInt(data.ngaji.suratAwal)].name;
+                const suratAkhir = data.ngaji.suratAkhir ? suratList[parseInt(data.ngaji.suratAkhir)].name : suratAwal;
+                const range = suratAwal === suratAkhir ? 
+                    suratAwal + ' ayat ' + data.ngaji.ayatAwal + '-' + data.ngaji.ayatAkhir :
+                    suratAwal + ':' + data.ngaji.ayatAwal + ' - ' + suratAkhir + ':' + data.ngaji.ayatAkhir;
+                content.innerHTML += '<div class="p-3 bg-slate-800/50 rounded-xl"><p class="text-slate-400 text-xs mb-1">Tilawah</p><p class="text-sm text-purple-400">' + range + '</p></div>';
+            }
+            
+            document.getElementById('day-modal').classList.remove('hidden');
+        }
+        
+        function closeDayModal() {
+            document.getElementById('day-modal').classList.add('hidden');
+        }
+        
+        // Memory Functions
+        function handleMemoryUpload(input) {
+            const files = input.files;
+            if (!files.length) return;
+            
+            Array.from(files).forEach(function(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const memory = {
+                        id: Date.now(),
+                        image: e.target.result,
+                        date: new Date().toISOString(),
+                        description: ''
+                    };
+                    appData.memories.unshift(memory);
+                    saveData();
+                    renderMemories();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function renderMemories() {
+            const container = document.getElementById('memories-list');
+            container.innerHTML = '';
+            
+            appData.memories.forEach(function(mem, idx) {
+                const date = new Date(mem.date);
+                const timeStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + ' • ' + 
+                               date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                
+                const item = document.createElement('div');
+                item.className = 'memory-item glass-card rounded-2xl overflow-hidden';
+                item.innerHTML = 
+                    '<img src="' + mem.image + '" class="w-full aspect-[4/3] object-cover">' +
+                    '<div class="p-4">' +
+                        '<p class="text-[10px] text-slate-500 mb-2">' + timeStr + '</p>' +
+                        '<textarea onchange="updateMemoryDesc(' + idx + ', this.value)" placeholder="Tambahkan keterangan..." class="w-full bg-transparent text-sm text-slate-300 resize-none focus:outline-none expandable-text ' + (mem.description.length > 50 ? 'expanded' : '') + '" rows="2">' + (mem.description || '') + '</textarea>' +
+                        (mem.description.length > 50 ? '<button onclick="this.previousElementSibling.classList.toggle(\'expanded\')" class="text-xs text-amber-500 mt-1">Selengkapnya</button>' : '') +
+                    '</div>';
+                
+                container.appendChild(item);
+            });
+        }
+        
+        function updateMemoryDesc(idx, value) {
+            appData.memories[idx].description = value;
+            saveData();
+        }
+        
+        // Profile
+        function updateProfile() {
+            const history = Object.values(appData.history);
+            document.getElementById('profile-total-days').textContent = history.length;
+            
+            if (history.length > 0) {
+                const totalScore = history.reduce(function(sum, h) { return sum + h.score; }, 0);
+                const avg = Math.floor(totalScore / history.length);
+                const best = Math.max.apply(null, history.map(function(h) { return h.score; }));
+                
+                document.getElementById('profile-avg-score').textContent = avg;
+                document.getElementById('profile-best-score').textContent = best;
+            }
+        }
+        
+        // Navigation
+        function switchTab(tab) {
+            document.querySelectorAll('.page-content').forEach(function(p) { p.classList.add('hidden'); });
+            document.getElementById('page-' + tab).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+            document.getElementById('nav-' + tab).classList.add('active');
+            
+            if (tab === 'profile') {
+                renderCalendar();
+                updateProfile();
+            } else if (tab === 'todo') {
+                renderTodos();
+            }
+        }
+        
+        // Storage
+        function saveData() {
+            localStorage.setItem('ramadanApp2026', JSON.stringify(appData));
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('ramadanApp2026');
+            if (saved) {
+                appData = JSON.parse(saved);
+            }
+        }
+    </script>
+</body>
+</html>
