@@ -394,6 +394,37 @@
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(1.1); opacity: 0.8; }
         }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .collapsible-content.expanded {
+            max-height: 1000px;
+        }
+        
+        .chevron-rotate {
+            transition: transform 0.3s;
+        }
+        
+        .chevron-rotate.expanded {
+            transform: rotate(180deg);
+        }
+        
+        .tarawih-notice {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 11px;
+            color: #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -497,6 +528,12 @@
                 </div>
             </div>
 
+            <!-- Tarawih Notice -->
+            <div id="tarawih-notice" class="tarawih-notice" style="display: none;">
+                <i class="fas fa-info-circle"></i>
+                <span>Sudah lewat Maghrib. Poin Tarawih akan disimpan untuk besok.</span>
+            </div>
+
             <!-- Amalan Form -->
             <div class="space-y-4" id="amalan-container">
                 
@@ -553,46 +590,185 @@
                     </div>
                 </div>
 
-                <!-- Sholat Sunnah -->
-                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-emerald-500/50 amalan-item" data-type="sunnah">
+                <!-- Sholat Sunnah Rawatib -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-emerald-500/50 amalan-item" data-type="rawatib">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center text-emerald-400">
                             <i class="fas fa-praying-hands"></i>
                         </div>
                         <div>
-                            <h4 class="text-white font-medium">Sholat Sunnah</h4>
+                            <h4 class="text-white font-medium">Sholat Sunnah Rawatib</h4>
+                            <p class="text-xs text-slate-400">Qobliyah & Ba'diyah</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <!-- Subuh Qobliyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Qobliyah Subuh</span>
+                                <span class="text-xs text-emerald-400">Mu'akkad +30</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="checkbox-luxury" id="rawatib-subuh-qobliyah" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Dzuhur Qobliyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Qobliyah Dzuhur</span>
+                                <span class="text-xs text-emerald-400">Mu'akkad +20/40</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="dzuhur-qobliyah" class="checkbox-luxury" id="rawatib-dzuhur-qobliyah-2" value="2" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="dzuhur-qobliyah" class="checkbox-luxury" id="rawatib-dzuhur-qobliyah-4" value="4" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">4 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Dzuhur Ba'diyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Ba'diyah Dzuhur</span>
+                                <span class="text-xs text-emerald-400">Mu'akkad +20/40</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="dzuhur-badiyah" class="checkbox-luxury" id="rawatib-dzuhur-badiyah-2" value="2" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="dzuhur-badiyah" class="checkbox-luxury" id="rawatib-dzuhur-badiyah-4" value="4" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">4 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Ashar Qobliyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Qobliyah Ashar</span>
+                                <span class="text-xs text-emerald-400">Ghairu Mu'akkad +20/40</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="ashar-qobliyah" class="checkbox-luxury" id="rawatib-ashar-qobliyah-2" value="2" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="ashar-qobliyah" class="checkbox-luxury" id="rawatib-ashar-qobliyah-4" value="4" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">4 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Maghrib Qobliyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Qobliyah Maghrib</span>
+                                <span class="text-xs text-emerald-400">Ghairu Mu'akkad +20</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="checkbox-luxury" id="rawatib-maghrib-qobliyah" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Maghrib Ba'diyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Ba'diyah Maghrib</span>
+                                <span class="text-xs text-emerald-400">Mu'akkad +20</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="checkbox-luxury" id="rawatib-maghrib-badiyah" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Isya Qobliyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Qobliyah Isya</span>
+                                <span class="text-xs text-emerald-400">Ghairu Mu'akkad +20</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="checkbox-luxury" id="rawatib-isya-qobliyah" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Isya Ba'diyah -->
+                        <div class="p-3 rounded-lg bg-white/5 border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-300 font-medium">Ba'diyah Isya</span>
+                                <span class="text-xs text-emerald-400">Mu'akkad +20</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="checkbox-luxury" id="rawatib-isya-badiyah" onchange="updateAmalan(true)">
+                                    <span class="text-xs text-slate-400">2 Rakaat</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sholat Sunnah Lainnya -->
+                <div class="glass-card rounded-2xl p-5 border-l-4 border-l-teal-500/50 amalan-item" data-type="sunnah-lain">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 flex items-center justify-center text-teal-400">
+                            <i class="fas fa-star-and-crescent"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Sholat Sunnah Lainnya</h4>
                             <p class="text-xs text-slate-400">Pahala berlipat</p>
                         </div>
                     </div>
                     
                     <div class="space-y-3">
                         <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
-                            <span class="text-sm text-slate-300 line-clamp-2">Rawatib Qabliyah & Ba'diyah</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-emerald-400">+50</span>
-                                <input type="checkbox" class="checkbox-luxury" id="sunnah-rawatib" onchange="updateAmalan(true)">
-                            </div>
-                        </label>
-                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
                             <span class="text-sm text-slate-300 line-clamp-2">Dhuha (2-12 rakaat)</span>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs text-emerald-400">+30</span>
+                                <span class="text-xs text-teal-400">+30</span>
                                 <input type="checkbox" class="checkbox-luxury" id="sunnah-dhuha" onchange="updateAmalan(true)">
                             </div>
                         </label>
                         <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
                             <span class="text-sm text-slate-300 line-clamp-2">Tahajud</span>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs text-emerald-400">+100</span>
+                                <span class="text-xs text-teal-400">+100</span>
                                 <input type="checkbox" class="checkbox-luxury" id="sunnah-tahajud" onchange="updateAmalan(true)">
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300 line-clamp-2">Taubat</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-teal-400">+50</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-taubat" onchange="updateAmalan(true)">
                             </div>
                         </label>
                         
                         <!-- Tarawih with rakaat count -->
-                        <div class="p-2 rounded-lg bg-white/5">
+                        <div class="p-3 rounded-lg bg-white/5 border border-teal-500/20">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm text-slate-300 line-clamp-2">Tarawih</span>
-                                <span class="text-xs text-emerald-400">+100 (full 23)</span>
+                                <span class="text-sm text-slate-300 font-medium line-clamp-2">Tarawih</span>
+                                <span class="text-xs text-teal-400">+100 (full 23)</span>
                             </div>
                             <div class="flex items-center gap-3 flex-wrap">
                                 <input type="checkbox" class="checkbox-luxury" id="sunnah-tarawih" onchange="updateAmalan(true)">
@@ -600,16 +776,8 @@
                                 <input type="number" id="tarawih-rakaat" min="0" max="23" placeholder="Rakaat" class="w-20 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-sm text-white text-center" onchange="updateAmalan(true)">
                                 <span class="text-xs text-slate-500 line-clamp-2">/ 23</span>
                             </div>
-                            <p class="text-xs text-emerald-400 mt-1" id="tarawih-points">0 poin</p>
+                            <p class="text-xs text-teal-400 mt-1" id="tarawih-points">0 poin</p>
                         </div>
-                        
-                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
-                            <span class="text-sm text-slate-300 line-clamp-2">Witir</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-emerald-400">+40</span>
-                                <input type="checkbox" class="checkbox-luxury" id="sunnah-witir" onchange="updateAmalan(true)">
-                            </div>
-                        </label>
                     </div>
                 </div>
 
@@ -673,13 +841,6 @@
                     </div>
                     
                     <div class="space-y-3">
-                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
-                            <span class="text-sm text-slate-300 line-clamp-2">Dzikir pagi & petang</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-rose-400">+40</span>
-                                <input type="checkbox" class="checkbox-luxury" id="lain-dzikir" onchange="updateAmalan(true)">
-                            </div>
-                        </label>
                         <div class="flex items-center justify-between p-2">
                             <span class="text-sm text-slate-300 line-clamp-2">Infaq/Sedekah</span>
                             <div class="flex items-center gap-2">
@@ -723,11 +884,11 @@
                             <p class="text-xs text-slate-400 line-clamp-2">Buku, artikel, atau materi lainnya</p>
                         </div>
                         
-                        <div id="reading-list" class="space-y-3 px-6">
+                        <div id="reading-list" class="space-y-3 px-6 mb-4">
                             <!-- Populated by JS -->
                         </div>
                         
-                        <button onclick="openTodoModal('reading')" class="mx-6 mt-4 w-[calc(100%-3rem)] py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:border-amber-500/50 hover:text-amber-400 transition flex items-center justify-center gap-2">
+                        <button onclick="openTodoModal('reading')" class="mx-6 w-[calc(100%-3rem)] py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:border-amber-500/50 hover:text-amber-400 transition flex items-center justify-center gap-2">
                             <i class="fas fa-plus"></i>
                             <span class="line-clamp-2">Tambah Target Bacaan</span>
                         </button>
@@ -740,11 +901,11 @@
                             <p class="text-xs text-slate-400 line-clamp-2">Olahraga dan aktivitas fisik</p>
                         </div>
                         
-                        <div id="workout-list" class="space-y-3 px-6">
+                        <div id="workout-list" class="space-y-3 px-6 mb-4">
                             <!-- Populated by JS -->
                         </div>
                         
-                        <button onclick="openTodoModal('workout')" class="mx-6 mt-4 w-[calc(100%-3rem)] py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:border-amber-500/50 hover:text-amber-400 transition flex items-center justify-center gap-2">
+                        <button onclick="openTodoModal('workout')" class="mx-6 w-[calc(100%-3rem)] py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:border-amber-500/50 hover:text-amber-400 transition flex items-center justify-center gap-2">
                             <i class="fas fa-plus"></i>
                             <span class="line-clamp-2">Tambah Target Workout</span>
                         </button>
@@ -940,6 +1101,24 @@
                         <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2 line-clamp-2">Deskripsi</label>
                         <textarea id="todo-desc" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:border-amber-500/50 focus:outline-none resize-none" placeholder="Detail target..."></textarea>
                     </div>
+
+                    <!-- Image Upload for Todo -->
+                    <div>
+                        <label class="text-xs text-slate-400 uppercase tracking-wider block mb-2 line-clamp-2">Gambar (opsional)</label>
+                        <div class="flex gap-2">
+                            <button onclick="document.getElementById('todo-image-gallery').click()" class="flex-1 py-3 bg-slate-800 rounded-xl text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-2">
+                                <i class="fas fa-images"></i>
+                                <span class="text-sm">Galeri</span>
+                            </button>
+                            <button onclick="document.getElementById('todo-image-camera').click()" class="flex-1 py-3 bg-slate-800 rounded-xl text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-2">
+                                <i class="fas fa-camera"></i>
+                                <span class="text-sm">Kamera</span>
+                            </button>
+                        </div>
+                        <input type="file" id="todo-image-gallery" class="hidden" accept="image/*" onchange="handleTodoImageUpload(this)">
+                        <input type="file" id="todo-image-camera" class="hidden" accept="image/*" capture="environment" onchange="handleTodoImageUpload(this)">
+                        <div id="todo-image-preview" class="mt-3 grid grid-cols-3 gap-2"></div>
+                    </div>
                 </div>
                 
                 <button onclick="saveTodo()" class="w-full mt-6 py-4 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-900 font-bold rounded-xl">
@@ -994,7 +1173,8 @@
                 history: []
             },
             currentDate: new Date('2026-02-18'),
-            todoFrequency: 'daily'
+            todoFrequency: 'daily',
+            tempTodoImages: []
         };
         
         let currentMonth = new Date('2026-02-18');
@@ -1015,13 +1195,37 @@
             {name: "Al-Qasas", ayat: 88}, {name: "Al-'Ankabut", ayat: 69}, {name: "Ar-Rum", ayat: 60}
         ];
         
-        // Prayer times for Baros, Sukabumi
-        const prayerTimes = {
-            subuh: '04:38',
-            dzuhur: '12:05',
-            ashar: '15:15',
-            maghrib: '18:12',
-            isya: '19:22'
+        // Prayer times schedule for Ramadan 1447H (Feb 19 - Mar 19, 2026)
+        const prayerSchedule = {
+            "2026-02-19": { imsak: "04:28", subuh: "04:43", dzuhur: "12:12", ashar: "15:23", maghrib: "18:21", isya: "19:32" },
+            "2026-02-20": { imsak: "04:28", subuh: "04:43", dzuhur: "12:12", ashar: "15:22", maghrib: "18:20", isya: "19:31" },
+            "2026-02-21": { imsak: "04:29", subuh: "04:44", dzuhur: "12:12", ashar: "15:21", maghrib: "18:20", isya: "19:31" },
+            "2026-02-22": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:20", maghrib: "18:20", isya: "19:30" },
+            "2026-02-23": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:20", maghrib: "18:20", isya: "19:30" },
+            "2026-02-24": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:19", maghrib: "18:19", isya: "19:30" },
+            "2026-02-25": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:18", maghrib: "18:19", isya: "19:29" },
+            "2026-02-26": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:17", maghrib: "18:19", isya: "19:29" },
+            "2026-02-27": { imsak: "04:29", subuh: "04:44", dzuhur: "12:11", ashar: "15:16", maghrib: "18:18", isya: "19:28" },
+            "2026-02-28": { imsak: "04:30", subuh: "04:45", dzuhur: "12:11", ashar: "15:15", maghrib: "18:18", isya: "19:28" },
+            "2026-03-01": { imsak: "04:32", subuh: "04:42", dzuhur: "12:07", ashar: "15:11", maghrib: "18:14", isya: "19:24" },
+            "2026-03-02": { imsak: "04:32", subuh: "04:42", dzuhur: "12:07", ashar: "15:10", maghrib: "18:14", isya: "19:24" },
+            "2026-03-03": { imsak: "04:32", subuh: "04:42", dzuhur: "12:07", ashar: "15:09", maghrib: "18:14", isya: "19:24" },
+            "2026-03-04": { imsak: "04:32", subuh: "04:42", dzuhur: "12:07", ashar: "15:08", maghrib: "18:13", isya: "19:23" },
+            "2026-03-05": { imsak: "04:32", subuh: "04:42", dzuhur: "12:06", ashar: "15:09", maghrib: "18:13", isya: "19:23" },
+            "2026-03-06": { imsak: "04:32", subuh: "04:42", dzuhur: "12:06", ashar: "15:09", maghrib: "18:12", isya: "19:22" },
+            "2026-03-07": { imsak: "04:32", subuh: "04:42", dzuhur: "12:06", ashar: "15:10", maghrib: "18:12", isya: "19:22" },
+            "2026-03-08": { imsak: "04:32", subuh: "04:42", dzuhur: "12:06", ashar: "15:10", maghrib: "18:12", isya: "19:21" },
+            "2026-03-09": { imsak: "04:32", subuh: "04:42", dzuhur: "12:06", ashar: "15:10", maghrib: "18:11", isya: "19:21" },
+            "2026-03-10": { imsak: "04:32", subuh: "04:42", dzuhur: "12:05", ashar: "15:11", maghrib: "18:11", isya: "19:20" },
+            "2026-03-11": { imsak: "04:32", subuh: "04:42", dzuhur: "12:05", ashar: "15:11", maghrib: "18:10", isya: "19:20" },
+            "2026-03-12": { imsak: "04:32", subuh: "04:42", dzuhur: "12:05", ashar: "15:11", maghrib: "18:10", isya: "19:19" },
+            "2026-03-13": { imsak: "04:32", subuh: "04:42", dzuhur: "12:04", ashar: "15:12", maghrib: "18:09", isya: "19:19" },
+            "2026-03-14": { imsak: "04:32", subuh: "04:42", dzuhur: "12:04", ashar: "15:12", maghrib: "18:09", isya: "19:18" },
+            "2026-03-15": { imsak: "04:32", subuh: "04:42", dzuhur: "12:04", ashar: "15:12", maghrib: "18:08", isya: "19:18" },
+            "2026-03-16": { imsak: "04:32", subuh: "04:42", dzuhur: "12:04", ashar: "15:13", maghrib: "18:08", isya: "19:17" },
+            "2026-03-17": { imsak: "04:32", subuh: "04:42", dzuhur: "12:03", ashar: "15:13", maghrib: "18:07", isya: "19:17" },
+            "2026-03-18": { imsak: "04:32", subuh: "04:42", dzuhur: "12:03", ashar: "15:13", maghrib: "18:07", isya: "19:16" },
+            "2026-03-19": { imsak: "04:32", subuh: "04:42", dzuhur: "12:03", ashar: "15:13", maghrib: "18:06", isya: "19:16" }
         };
         
         // Init
@@ -1031,17 +1235,16 @@
             updateTimer();
             setInterval(updateTimer, 1000);
             updateDate();
+            checkTarawihNotice();
+            setInterval(checkTarawihNotice, 60000);
             
-            // Load today's data if exists
             loadTodayData();
-            
             renderTodos();
             renderCalendar();
             renderMemories();
             updateProfile();
             checkHaidStatus();
             
-            // Setup beforeunload warning
             window.addEventListener('beforeunload', function(e) {
                 if (autoSaveTimeout) {
                     clearTimeout(autoSaveTimeout);
@@ -1073,16 +1276,23 @@
             document.getElementById('ramadan-day').textContent = 'Hari ke-' + (diffDays > 0 ? diffDays : 1);
         }
         
+        function getTodayPrayerTimes() {
+            const today = new Date();
+            const dateStr = today.toISOString().split('T')[0];
+            return prayerSchedule[dateStr] || prayerSchedule["2026-02-19"];
+        }
+        
         function updateTimer() {
             const now = new Date();
             const currentTime = now.getHours() * 60 + now.getMinutes();
+            const todayTimes = getTodayPrayerTimes();
             
             const times = [
-                { name: 'Subuh', time: prayerTimes.subuh, icon: 'fa-sun', minutes: parseTime(prayerTimes.subuh) },
-                { name: 'Dzuhur', time: prayerTimes.dzuhur, icon: 'fa-sun', minutes: parseTime(prayerTimes.dzuhur) },
-                { name: 'Ashar', time: prayerTimes.ashar, icon: 'fa-cloud-sun', minutes: parseTime(prayerTimes.ashar) },
-                { name: 'Maghrib', time: prayerTimes.maghrib, icon: 'fa-moon', minutes: parseTime(prayerTimes.maghrib) },
-                { name: 'Isya', time: prayerTimes.isya, icon: 'fa-star', minutes: parseTime(prayerTimes.isya) }
+                { name: 'Subuh', time: todayTimes.subuh, icon: 'fa-sun', minutes: parseTime(todayTimes.subuh) },
+                { name: 'Dzuhur', time: todayTimes.dzuhur, icon: 'fa-sun', minutes: parseTime(todayTimes.dzuhur) },
+                { name: 'Ashar', time: todayTimes.ashar, icon: 'fa-cloud-sun', minutes: parseTime(todayTimes.ashar) },
+                { name: 'Maghrib', time: todayTimes.maghrib, icon: 'fa-moon', minutes: parseTime(todayTimes.maghrib) },
+                { name: 'Isya', time: todayTimes.isya, icon: 'fa-star', minutes: parseTime(todayTimes.isya) }
             ];
             
             let nextPrayer = times.find(function(t) { return t.minutes > currentTime; });
@@ -1109,14 +1319,28 @@
             return h * 60 + m;
         }
         
-        // Get current fasting date based on maghrib time
-        function getCurrentFastingDate() {
+        function checkTarawihNotice() {
             const now = new Date();
+            const todayTimes = getTodayPrayerTimes();
             const maghribTime = new Date(now);
-            const [h, m] = prayerTimes.maghrib.split(':');
+            const [h, m] = todayTimes.maghrib.split(':');
             maghribTime.setHours(parseInt(h), parseInt(m), 0);
             
-            // If now is after maghrib, we're in the "next day" of fasting
+            const notice = document.getElementById('tarawih-notice');
+            if (now > maghribTime) {
+                notice.style.display = 'flex';
+            } else {
+                notice.style.display = 'none';
+            }
+        }
+        
+        function getCurrentFastingDate() {
+            const now = new Date();
+            const todayTimes = getTodayPrayerTimes();
+            const maghribTime = new Date(now);
+            const [h, m] = todayTimes.maghrib.split(':');
+            maghribTime.setHours(parseInt(h), parseInt(m), 0);
+            
             if (now > maghribTime) {
                 const tomorrow = new Date(now);
                 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -1125,17 +1349,29 @@
             return now.toDateString();
         }
         
-        // Load today's saved data
+        function getTarawihDate() {
+            const now = new Date();
+            const todayTimes = getTodayPrayerTimes();
+            const maghribTime = new Date(now);
+            const [h, m] = todayTimes.maghrib.split(':');
+            maghribTime.setHours(parseInt(h), parseInt(m), 0);
+            
+            if (now > maghribTime) {
+                const tomorrow = new Date(now);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                return tomorrow.toDateString();
+            }
+            return now.toDateString();
+        }
+        
         function loadTodayData() {
             const todayStr = getCurrentFastingDate();
             const savedData = appData.history[todayStr];
             
             if (savedData) {
-                // Restore all form values
                 restoreFormValues(savedData);
             }
             
-            // Also set currentDay tracker
             appData.currentDay.date = todayStr;
             appData.currentDay.data = savedData || createEmptyDayData();
         }
@@ -1146,41 +1382,66 @@
                 score: 0,
                 puasa: false,
                 sholat: { subuh: false, dzuhur: false, ashar: false, maghrib: false, isya: false },
-                sunnah: { rawatib: false, dhuha: false, tahajud: false, witir: false },
-                tarawih: { done: false, rakaat: 0 },
+                rawatib: {
+                    subuhQobliyah: false,
+                    dzuhurQobliyah: 0,
+                    dzuhurBadiyah: 0,
+                    asharQobliyah: 0,
+                    maghribQobliyah: false,
+                    maghribBadiyah: false,
+                    isyaQobliyah: false,
+                    isyaBadiyah: false
+                },
+                sunnahLain: { dhuha: false, tahajud: false, taubat: false },
+                tarawih: { done: false, rakaat: 0, date: null },
                 ngaji: { suratAwal: '', ayatAwal: '', suratAkhir: '', ayatAkhir: '' },
-                lain: { dzikir: false, infaq: '' },
-                haid: false
+                lain: { infaq: '' },
+                haid: false,
+                todoPoints: 0
             };
         }
         
         function restoreFormValues(data) {
-            // Puasa toggle
             if (data.puasa) {
                 document.getElementById('toggle-puasa').classList.add('active');
                 document.getElementById('status-puasa').textContent = 'Puasa full aktif ✓';
                 document.getElementById('status-puasa').classList.add('text-emerald-400');
             }
             
-            // Sholat
             Object.keys(data.sholat).forEach(function(key) {
                 const cb = document.getElementById('sholat-' + key);
                 if (cb) cb.checked = data.sholat[key];
             });
             
-            // Sunnah
-            if (data.sunnah.rawatib) document.getElementById('sunnah-rawatib').checked = true;
-            if (data.sunnah.dhuha) document.getElementById('sunnah-dhuha').checked = true;
-            if (data.sunnah.tahajud) document.getElementById('sunnah-tahajud').checked = true;
-            if (data.sunnah.witir) document.getElementById('sunnah-witir').checked = true;
+            if (data.rawatib) {
+                if (data.rawatib.subuhQobliyah) document.getElementById('rawatib-subuh-qobliyah').checked = true;
+                
+                if (data.rawatib.dzuhurQobliyah === 2) document.getElementById('rawatib-dzuhur-qobliyah-2').checked = true;
+                else if (data.rawatib.dzuhurQobliyah === 4) document.getElementById('rawatib-dzuhur-qobliyah-4').checked = true;
+                
+                if (data.rawatib.dzuhurBadiyah === 2) document.getElementById('rawatib-dzuhur-badiyah-2').checked = true;
+                else if (data.rawatib.dzuhurBadiyah === 4) document.getElementById('rawatib-dzuhur-badiyah-4').checked = true;
+                
+                if (data.rawatib.asharQobliyah === 2) document.getElementById('rawatib-ashar-qobliyah-2').checked = true;
+                else if (data.rawatib.asharQobliyah === 4) document.getElementById('rawatib-ashar-qobliyah-4').checked = true;
+                
+                if (data.rawatib.maghribQobliyah) document.getElementById('rawatib-maghrib-qobliyah').checked = true;
+                if (data.rawatib.maghribBadiyah) document.getElementById('rawatib-maghrib-badiyah').checked = true;
+                if (data.rawatib.isyaQobliyah) document.getElementById('rawatib-isya-qobliyah').checked = true;
+                if (data.rawatib.isyaBadiyah) document.getElementById('rawatib-isya-badiyah').checked = true;
+            }
             
-            // Tarawih
+            if (data.sunnahLain) {
+                if (data.sunnahLain.dhuha) document.getElementById('sunnah-dhuha').checked = true;
+                if (data.sunnahLain.tahajud) document.getElementById('sunnah-tahajud').checked = true;
+                if (data.sunnahLain.taubat) document.getElementById('sunnah-taubat').checked = true;
+            }
+            
             if (data.tarawih) {
                 if (data.tarawih.done) document.getElementById('sunnah-tarawih').checked = true;
                 if (data.tarawih.rakaat) document.getElementById('tarawih-rakaat').value = data.tarawih.rakaat;
             }
             
-            // Ngaji
             if (data.ngaji) {
                 if (data.ngaji.suratAwal) document.getElementById('ngaji-surat-awal').value = data.ngaji.suratAwal;
                 if (data.ngaji.ayatAwal) document.getElementById('ngaji-ayat-awal').value = data.ngaji.ayatAwal;
@@ -1188,13 +1449,10 @@
                 if (data.ngaji.ayatAkhir) document.getElementById('ngaji-ayat-akhir').value = data.ngaji.ayatAkhir;
             }
             
-            // Lainnya
             if (data.lain) {
-                if (data.lain.dzikir) document.getElementById('lain-dzikir').checked = true;
                 if (data.lain.infaq) document.getElementById('lain-infaq').value = data.lain.infaq;
             }
             
-            // Recalculate score display
             updateAmalan(false);
         }
         
@@ -1215,17 +1473,16 @@
             updateAmalan(true);
         }
         
-        // Update amalan with auto-save
         function updateAmalan(shouldAutoSave) {
             if (appData.haid.active) {
-                document.querySelectorAll('.amalan-item input[type="checkbox"]').forEach(function(cb) {
+                document.querySelectorAll('.amalan-item input[type="checkbox"], .amalan-item input[type="radio"]').forEach(function(cb) {
                     cb.disabled = true;
                     cb.closest('.amalan-item').classList.add('opacity-50');
                 });
                 document.getElementById('toggle-puasa').style.pointerEvents = 'none';
                 return;
             } else {
-                document.querySelectorAll('.amalan-item input[type="checkbox"]').forEach(function(cb) {
+                document.querySelectorAll('.amalan-item input[type="checkbox"], .amalan-item input[type="radio"]').forEach(function(cb) {
                     cb.disabled = false;
                     cb.closest('.amalan-item').classList.remove('opacity-50');
                 });
@@ -1234,12 +1491,10 @@
             
             let total = 0;
             
-            // Puasa
             const puasaToggle = document.getElementById('toggle-puasa');
             const isPuasa = puasaToggle.classList.contains('active');
             if (isPuasa) total += 100;
             
-            // Sholat wajib
             const sholatStatus = {};
             ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'].forEach(function(w) {
                 const cb = document.getElementById('sholat-' + w);
@@ -1248,19 +1503,39 @@
                 if (checked) total += 20;
             });
             
-            // Sunnah
-            const sunnahStatus = {
-                rawatib: document.getElementById('sunnah-rawatib').checked,
-                dhuha: document.getElementById('sunnah-dhuha').checked,
-                tahajud: document.getElementById('sunnah-tahajud').checked,
-                witir: document.getElementById('sunnah-witir').checked
+            const rawatibStatus = {
+                subuhQobliyah: document.getElementById('rawatib-subuh-qobliyah').checked,
+                dzuhurQobliyah: parseInt(document.querySelector('input[name="dzuhur-qobliyah"]:checked')?.value) || 0,
+                dzuhurBadiyah: parseInt(document.querySelector('input[name="dzuhur-badiyah"]:checked')?.value) || 0,
+                asharQobliyah: parseInt(document.querySelector('input[name="ashar-qobliyah"]:checked')?.value) || 0,
+                maghribQobliyah: document.getElementById('rawatib-maghrib-qobliyah').checked,
+                maghribBadiyah: document.getElementById('rawatib-maghrib-badiyah').checked,
+                isyaQobliyah: document.getElementById('rawatib-isya-qobliyah').checked,
+                isyaBadiyah: document.getElementById('rawatib-isya-badiyah').checked
             };
             
-            if (sunnahStatus.rawatib) total += 50;
-            if (sunnahStatus.dhuha) total += 30;
-            if (sunnahStatus.tahajud) total += 100;
+            if (rawatibStatus.subuhQobliyah) total += 30;
+            if (rawatibStatus.dzuhurQobliyah === 2) total += 20;
+            if (rawatibStatus.dzuhurQobliyah === 4) total += 40;
+            if (rawatibStatus.dzuhurBadiyah === 2) total += 20;
+            if (rawatibStatus.dzuhurBadiyah === 4) total += 40;
+            if (rawatibStatus.asharQobliyah === 2) total += 20;
+            if (rawatibStatus.asharQobliyah === 4) total += 40;
+            if (rawatibStatus.maghribQobliyah) total += 20;
+            if (rawatibStatus.maghribBadiyah) total += 20;
+            if (rawatibStatus.isyaQobliyah) total += 20;
+            if (rawatibStatus.isyaBadiyah) total += 20;
             
-            // Tarawih with rakaat
+            const sunnahLainStatus = {
+                dhuha: document.getElementById('sunnah-dhuha').checked,
+                tahajud: document.getElementById('sunnah-tahajud').checked,
+                taubat: document.getElementById('sunnah-taubat').checked
+            };
+            
+            if (sunnahLainStatus.dhuha) total += 30;
+            if (sunnahLainStatus.tahajud) total += 100;
+            if (sunnahLainStatus.taubat) total += 50;
+            
             const tarawihCheck = document.getElementById('sunnah-tarawih');
             const tarawihRakaat = parseInt(document.getElementById('tarawih-rakaat').value) || 0;
             const isTarawih = tarawihCheck.checked;
@@ -1273,9 +1548,6 @@
                 document.getElementById('tarawih-points').textContent = '0 poin';
             }
             
-            if (sunnahStatus.witir) total += 40;
-            
-            // Ngaji
             const suratAwal = document.getElementById('ngaji-surat-awal').value;
             const ayatAwal = parseInt(document.getElementById('ngaji-ayat-awal').value) || 0;
             const suratAkhir = document.getElementById('ngaji-surat-akhir').value;
@@ -1305,49 +1577,57 @@
                 document.getElementById('ngaji-total').textContent = '0 ayat • 0 poin';
             }
             
-            // Lainnya
-            const isDzikir = document.getElementById('lain-dzikir').checked;
-            if (isDzikir) total += 40;
-            
             const infaq = parseInt(document.getElementById('lain-infaq').value) || 0;
             total += Math.floor(infaq / 1000);
             
-            // Update UI
+            // Add todo points for today
+            const todayStr = new Date().toDateString();
+            let todoPoints = 0;
+            
+            ['reading', 'workout'].forEach(function(type) {
+                appData.todos[type].forEach(function(todo) {
+                    if (todo.completed && todo.completed[todayStr]) {
+                        todoPoints += todo.points || 0;
+                    }
+                });
+            });
+            
+            total += todoPoints;
+            
             document.getElementById('current-points').textContent = total;
             const percent = Math.min((total / 1000) * 100, 100);
             document.getElementById('progress-percent').textContent = Math.floor(percent) + '%';
             document.getElementById('progress-bar').style.width = percent + '%';
             document.getElementById('progress-circle').setAttribute('stroke-dasharray', percent + ', 100');
             
-            // Save to current day data
-            const todayStr = getCurrentFastingDate();
-            appData.currentDay.date = todayStr;
+            const todayFastingStr = getCurrentFastingDate();
+            appData.currentDay.date = todayFastingStr;
             appData.currentDay.data = {
-                date: todayStr,
+                date: todayFastingStr,
                 score: total,
                 puasa: isPuasa,
                 sholat: sholatStatus,
-                sunnah: sunnahStatus,
-                tarawih: { done: isTarawih, rakaat: tarawihRakaat },
+                rawatib: rawatibStatus,
+                sunnahLain: sunnahLainStatus,
+                tarawih: { done: isTarawih, rakaat: tarawihRakaat, date: isTarawih ? getTarawihDate() : null },
                 ngaji: { 
                     suratAwal: suratAwal, 
                     ayatAwal: ayatAwal, 
                     suratAkhir: suratAkhir, 
                     ayatAkhir: ayatAkhir 
                 },
-                lain: { dzikir: isDzikir, infaq: infaq },
-                haid: appData.haid.active
+                lain: { infaq: infaq },
+                haid: appData.haid.active,
+                todoPoints: todoPoints
             };
             
-            // Auto-save with debounce
             if (shouldAutoSave) {
                 if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
                 autoSaveTimeout = setTimeout(function() {
                     autoSave();
-                }, 1000); // Save 1 second after last change
+                }, 1000);
             }
             
-            // Celebration if reached 500
             if (total >= 500 && !window.celebrated500) {
                 window.celebrated500 = true;
                 celebrate500();
@@ -1356,21 +1636,15 @@
         
         function autoSave() {
             const todayStr = getCurrentFastingDate();
-            
-            // Save to history
             appData.history[todayStr] = appData.currentDay.data;
-            
-            // Save to localStorage
             saveData();
             
-            // Show indicator
             const indicator = document.getElementById('auto-save-indicator');
             indicator.classList.add('show');
             setTimeout(function() {
                 indicator.classList.remove('show');
             }, 2000);
             
-            // Update calendar and profile
             renderCalendar();
             updateProfile();
         }
@@ -1421,7 +1695,6 @@
             }, 4000);
         }
         
-        // Haid Functions
         function toggleHaid(active) {
             appData.haid.active = active;
             
@@ -1432,13 +1705,11 @@
                 document.getElementById('btn-haid-off').classList.remove('hidden');
                 document.getElementById('haid-status-text').textContent = 'Sedang haid';
                 
-                // Disable all inputs
                 document.querySelectorAll('.amalan-item input, .amalan-item select').forEach(function(input) {
                     input.disabled = true;
                 });
                 document.getElementById('toggle-puasa').style.pointerEvents = 'none';
                 
-                // Save current state as haid day
                 const todayStr = getCurrentFastingDate();
                 appData.history[todayStr] = {
                     date: todayStr,
@@ -1452,7 +1723,6 @@
                 document.getElementById('btn-haid-off').classList.add('hidden');
                 document.getElementById('haid-status-text').textContent = 'Tidak haid';
                 
-                // Re-enable inputs
                 document.querySelectorAll('.amalan-item input, .amalan-item select').forEach(function(input) {
                     input.disabled = false;
                 });
@@ -1470,7 +1740,6 @@
             }
         }
         
-        // Todo Functions
         function toggleTodoSlide() {
             const toggle = document.getElementById('todo-toggle');
             const slider = document.getElementById('todo-slider');
@@ -1500,6 +1769,8 @@
             currentTodoType = type;
             document.getElementById('modal-title').textContent = type === 'reading' ? 'Tambah Target Bacaan' : 'Tambah Target Workout';
             document.getElementById('todo-modal').classList.remove('hidden');
+            appData.tempTodoImages = [];
+            renderTodoImagePreview();
         }
         
         function closeTodoModal() {
@@ -1507,6 +1778,8 @@
             document.getElementById('todo-title').value = '';
             document.getElementById('todo-desc').value = '';
             document.getElementById('todo-points').value = '20';
+            appData.tempTodoImages = [];
+            renderTodoImagePreview();
         }
         
         function setTodoFrequency(freq) {
@@ -1518,6 +1791,47 @@
             document.getElementById('freq-weekly').classList.toggle('bg-amber-500/10', freq === 'weekly');
             document.getElementById('freq-weekly').classList.toggle('text-amber-400', freq === 'weekly');
             document.getElementById('days-selector').style.display = freq === 'weekly' ? 'block' : 'none';
+        }
+        
+        function handleTodoImageUpload(input) {
+            const files = input.files;
+            if (!files.length) return;
+            
+            Array.from(files).forEach(function(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appData.tempTodoImages.push({
+                        id: Date.now() + Math.random(),
+                        src: e.target.result,
+                        desc: ''
+                    });
+                    renderTodoImagePreview();
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            input.value = '';
+        }
+        
+        function renderTodoImagePreview() {
+            const container = document.getElementById('todo-image-preview');
+            container.innerHTML = '';
+            
+            appData.tempTodoImages.forEach(function(img, idx) {
+                const div = document.createElement('div');
+                div.className = 'relative aspect-square rounded-lg overflow-hidden bg-slate-800';
+                div.innerHTML = 
+                    '<img src="' + img.src + '" class="w-full h-full object-cover">' +
+                    '<button onclick="removeTodoImage(' + idx + ')" class="absolute top-1 right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">' +
+                        '<i class="fas fa-times"></i>' +
+                    '</button>';
+                container.appendChild(div);
+            });
+        }
+        
+        function removeTodoImage(idx) {
+            appData.tempTodoImages.splice(idx, 1);
+            renderTodoImagePreview();
         }
         
         function saveTodo() {
@@ -1535,6 +1849,7 @@
                 frequency: appData.todoFrequency,
                 days: appData.todoFrequency === 'weekly' ? Array.from(document.querySelectorAll('#days-selector input:checked')).map(function(cb) { return cb.value; }) : [0,1,2,3,4,5,6],
                 completed: {},
+                images: JSON.parse(JSON.stringify(appData.tempTodoImages)),
                 createdAt: new Date().toISOString()
             };
             
@@ -1556,23 +1871,87 @@
                     const isCompleted = todo.completed[new Date().toDateString()];
                     
                     const item = document.createElement('div');
-                    item.className = 'glass-card rounded-2xl p-4 border-l-4 ' + (type === 'reading' ? 'border-l-purple-500/50' : 'border-l-amber-500/50') + ' ' + (isCompleted ? 'opacity-50' : '');
+                    item.className = 'glass-card rounded-2xl overflow-hidden border-l-4 ' + (type === 'reading' ? 'border-l-purple-500/50' : 'border-l-amber-500/50') + ' ' + (isCompleted ? 'opacity-50' : '');
+                    
+                    const hasImages = todo.images && todo.images.length > 0;
+                    const imagesHtml = hasImages ? 
+                        '<div class="px-4 pb-3">' +
+                            '<div class="flex items-center gap-2 mb-2 cursor-pointer" onclick="toggleTodoImages(' + todo.id + ')">' +
+                                '<i class="fas fa-chevron-down chevron-rotate text-slate-400" id="chevron-' + todo.id + '"></i>' +
+                                '<span class="text-xs text-slate-400">' + todo.images.length + ' gambar</span>' +
+                            '</div>' +
+                            '<div id="todo-images-' + todo.id + '" class="hidden">' +
+                                '<div class="grid grid-cols-4 gap-2 mb-3">' +
+                                    todo.images.map(function(img, idx) {
+                                        return '<div class="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition" onclick="expandTodoImage(' + todo.id + ', ' + idx + ')">' +
+                                            '<img src="' + img.src + '" class="w-full h-full object-cover">' +
+                                        '</div>';
+                                    }).join('') +
+                                '</div>' +
+                                '<div id="todo-expand-' + todo.id + '" class="hidden">' +
+                                    '<div class="relative rounded-lg overflow-hidden bg-slate-800 mb-2">' +
+                                        '<img id="todo-expand-img-' + todo.id + '" src="" class="w-full aspect-video object-cover">' +
+                                        '<textarea id="todo-expand-desc-' + todo.id + '" onchange="updateTodoImageDesc(' + todo.id + ', this.dataset.idx, this.value)" data-idx="0" placeholder="Deskripsi gambar..." class="w-full bg-slate-900/80 p-3 text-sm text-white resize-none focus:outline-none" rows="2"></textarea>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' : '';
                     
                     item.innerHTML = 
-                        '<div class="flex items-start justify-between">' +
-                            '<div class="flex-1 min-w-0">' +
-                                '<h4 class="text-white font-medium ' + (isCompleted ? 'line-through' : '') + ' truncate">' + todo.title + '</h4>' +
-                                (todo.description ? '<p class="text-xs text-slate-400 mt-1 line-clamp-2">' + todo.description + '</p>' : '') +
-                                '<p class="text-xs ' + (type === 'reading' ? 'text-purple-400' : 'text-amber-400') + ' mt-2">+' + todo.points + ' poin</p>' +
+                        '<div class="p-4">' +
+                            '<div class="flex items-start justify-between">' +
+                                '<div class="flex-1 min-w-0">' +
+                                    '<h4 class="text-white font-medium ' + (isCompleted ? 'line-through' : '') + ' truncate">' + todo.title + '</h4>' +
+                                    (todo.description ? '<p class="text-xs text-slate-400 mt-1 line-clamp-2">' + todo.description + '</p>' : '') +
+                                    '<p class="text-xs ' + (type === 'reading' ? 'text-purple-400' : 'text-amber-400') + ' mt-2">+' + todo.points + ' poin</p>' +
+                                '</div>' +
+                                '<button onclick="toggleTodoCheck(' + todo.id + ', \'' + type + '\')" class="w-8 h-8 rounded-full ' + (isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-400') + ' flex items-center justify-center transition flex-shrink-0 ml-2">' +
+                                    '<i class="fas fa-check text-sm"></i>' +
+                                '</button>' +
                             '</div>' +
-                            '<button onclick="toggleTodoCheck(' + todo.id + ', \'' + type + '\')" class="w-8 h-8 rounded-full ' + (isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-400') + ' flex items-center justify-center transition flex-shrink-0 ml-2">' +
-                                '<i class="fas fa-check text-sm"></i>' +
-                            '</button>' +
-                        '</div>';
+                        '</div>' +
+                        imagesHtml;
                     
                     container.appendChild(item);
                 });
             });
+        }
+        
+        function toggleTodoImages(todoId) {
+            const container = document.getElementById('todo-images-' + todoId);
+            const chevron = document.getElementById('chevron-' + todoId);
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                chevron.classList.add('expanded');
+            } else {
+                container.classList.add('hidden');
+                chevron.classList.remove('expanded');
+            }
+        }
+        
+        function expandTodoImage(todoId, imgIdx) {
+            const todo = appData.todos.reading.find(function(t) { return t.id === todoId; }) || 
+                        appData.todos.workout.find(function(t) { return t.id === todoId; });
+            if (!todo || !todo.images[imgIdx]) return;
+            
+            const expandDiv = document.getElementById('todo-expand-' + todoId);
+            const expandImg = document.getElementById('todo-expand-img-' + todoId);
+            const descArea = document.getElementById('todo-expand-desc-' + todoId);
+            
+            expandDiv.classList.remove('hidden');
+            expandImg.src = todo.images[imgIdx].src;
+            descArea.value = todo.images[imgIdx].desc || '';
+            descArea.dataset.idx = imgIdx;
+        }
+        
+        function updateTodoImageDesc(todoId, imgIdx, value) {
+            const todo = appData.todos.reading.find(function(t) { return t.id === todoId; }) || 
+                        appData.todos.workout.find(function(t) { return t.id === todoId; });
+            if (todo && todo.images[imgIdx]) {
+                todo.images[imgIdx].desc = value;
+                saveData();
+            }
         }
         
         function toggleTodoCheck(id, type) {
@@ -1589,6 +1968,7 @@
             
             saveData();
             renderTodos();
+            updateAmalan(true); // Update amalan to include todo points
             updateProfile();
         }
         
@@ -1608,7 +1988,6 @@
             }, 1500);
         }
         
-        // Calendar Functions
         function renderCalendar() {
             const year = currentMonth.getFullYear();
             const month = currentMonth.getMonth();
@@ -1638,7 +2017,7 @@
                 
                 if (isToday) classes += ' today';
                 if (dayData && dayData.haid) classes += ' no-fasting';
-                else if (dayData && dayData.puasa) classes += ' active has-data';
+                else if (dayData && (dayData.puasa || dayData.score > 0)) classes += ' active has-data';
                 
                 cell.className = classes;
                 cell.textContent = day;
@@ -1678,15 +2057,19 @@
             } else {
                 if (data.puasa) {
                     content += '<div class="flex items-center gap-2 text-emerald-400 text-sm"><i class="fas fa-check-circle"></i> Puasa full</div>';
-                } else {
-                    content += '<div class="flex items-center gap-2 text-slate-500 text-sm"><i class="fas fa-times-circle"></i> Tidak puasa</div>';
                 }
                 
                 const sholatCount = Object.values(data.sholat).filter(function(v) { return v; }).length;
-                content += '<div class="flex items-center gap-2 text-blue-400 text-sm"><i class="fas fa-mosque"></i> Sholat: ' + sholatCount + '/5 waktu</div>';
+                if (sholatCount > 0) {
+                    content += '<div class="flex items-center gap-2 text-blue-400 text-sm"><i class="fas fa-mosque"></i> Sholat: ' + sholatCount + '/5 waktu</div>';
+                }
                 
                 if (data.tarawih && data.tarawih.done) {
-                    content += '<div class="flex items-center gap-2 text-emerald-400 text-sm"><i class="fas fa-moon"></i> Tarawih: ' + data.tarawih.rakaat + ' rakaat</div>';
+                    content += '<div class="flex items-center gap-2 text-teal-400 text-sm"><i class="fas fa-moon"></i> Tarawih: ' + data.tarawih.rakaat + ' rakaat</div>';
+                }
+                
+                if (data.todoPoints > 0) {
+                    content += '<div class="flex items-center gap-2 text-purple-400 text-sm"><i class="fas fa-check-circle"></i> Todo: ' + data.todoPoints + ' poin</div>';
                 }
             }
             
@@ -1694,7 +2077,6 @@
             detail.classList.remove('hidden');
         }
         
-        // Memory Functions
         function handleMemoryUpload(input, source) {
             const files = input.files;
             if (!files.length) return;
@@ -1722,6 +2104,8 @@
                 };
                 reader.readAsDataURL(file);
             });
+            
+            input.value = '';
         }
         
         function renderMemories() {
@@ -1762,7 +2146,6 @@
             }
         }
         
-        // Profile Functions
         function updateProfilePhoto(input) {
             const file = input.files[0];
             if (!file) return;
@@ -1797,15 +2180,21 @@
                 document.getElementById('profile-default-icon').classList.add('hidden');
             }
             
+            // Get all days with data
             const history = Object.values(appData.history);
-            const fastingDays = history.filter(function(h) { return h.puasa && !h.haid; });
+            const daysWithData = history.filter(function(h) { return h.score > 0 || h.puasa || h.haid; });
             
+            // Count fasting days (puasa true and not haid)
+            const fastingDays = history.filter(function(h) { return h.puasa && !h.haid; });
             document.getElementById('profile-total-days').textContent = fastingDays.length;
             
-            if (fastingDays.length > 0) {
-                const totalScore = fastingDays.reduce(function(sum, h) { return sum + (h.score || 0); }, 0);
-                const avg = Math.floor(totalScore / fastingDays.length);
-                const best = Math.max.apply(null, fastingDays.map(function(h) { return h.score || 0; }));
+            if (daysWithData.length > 0) {
+                // Calculate total score from all days
+                const totalScore = daysWithData.reduce(function(sum, h) { return sum + (h.score || 0); }, 0);
+                // Average = total score ÷ number of days with data
+                const avg = Math.floor(totalScore / daysWithData.length);
+                // Best = highest score ever
+                const best = Math.max.apply(null, daysWithData.map(function(h) { return h.score || 0; }));
                 
                 document.getElementById('profile-avg-score').textContent = avg;
                 document.getElementById('profile-best-score').textContent = best;
@@ -1815,7 +2204,6 @@
             }
         }
         
-        // Navigation
         function switchTab(tab) {
             document.querySelectorAll('.page-content').forEach(function(p) { p.classList.add('hidden'); });
             document.getElementById('page-' + tab).classList.remove('hidden');
@@ -1831,13 +2219,12 @@
             }
         }
         
-        // Storage
         function saveData() {
-            localStorage.setItem('ramadanApp2026_v3', JSON.stringify(appData));
+            localStorage.setItem('ramadanApp2026_v5', JSON.stringify(appData));
         }
         
         function loadData() {
-            const saved = localStorage.getItem('ramadanApp2026_v3');
+            const saved = localStorage.getItem('ramadanApp2026_v5');
             if (saved) {
                 appData = JSON.parse(saved);
             }
