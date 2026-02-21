@@ -413,19 +413,6 @@
             transform: rotate(180deg);
         }
         
-        .tarawih-notice {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 8px;
-            font-size: 11px;
-            color: #d4af37;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
         .ramadan-date-selector {
             display: flex;
             gap: 8px;
@@ -544,6 +531,131 @@
         .memory-date-input:focus {
             outline: none;
             border-color: #d4af37;
+        }
+        
+        .todo-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .todo-action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .todo-edit-btn {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+        
+        .todo-edit-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+        }
+        
+        .todo-delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+        
+        .todo-delete-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+        
+        .confirm-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .confirm-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        
+        .confirm-modal-content {
+            position: relative;
+            background: #1e293b;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .confirm-modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .confirm-modal-text {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .confirm-modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .confirm-modal-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .confirm-modal-cancel {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        
+        .confirm-modal-cancel:hover {
+            background: #475569;
+        }
+        
+        .confirm-modal-confirm {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .confirm-modal-confirm:hover {
+            background: #b91c1c;
+        }
+        
+        .tarawih-notice-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+        
+        .tarawih-notice-box p {
+            font-size: 12px;
+            color: #d4af37;
+            margin: 0;
         }
     </style>
 </head>
@@ -875,19 +987,13 @@
                             </div>
                         </label>
                         
-                        <!-- Tahajud - khusus untuk malam, jika diisi setelah maghrib masuk ke besok -->
-                        <div class="p-3 rounded-lg bg-white/5 border border-teal-500/20 border-dashed border-teal-500/40">
-                            <div class="flex items-center justify-between mb-2">
-                                <div>
-                                    <span class="text-sm text-slate-300 font-medium">Tahajud</span>
-                                    <p class="text-[10px] text-teal-400/70">*Jika diisi setelah Maghrib, masuk ke poin besok</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-xs text-teal-400">+100</span>
-                                    <input type="checkbox" class="checkbox-luxury" id="sunnah-tahajud" onchange="updateAmalan(true)">
-                                </div>
+                        <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
+                            <span class="text-sm text-slate-300 line-clamp-2">Tahajud</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-teal-400">+100</span>
+                                <input type="checkbox" class="checkbox-luxury" id="sunnah-tahajud" onchange="updateAmalan(true)">
                             </div>
-                        </div>
+                        </label>
                         
                         <label class="flex items-center justify-between cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition">
                             <span class="text-sm text-slate-300 line-clamp-2">Taubat</span>
@@ -897,7 +1003,17 @@
                             </div>
                         </label>
                         
-                        <!-- Tarawih with rakaat count -->
+                        <!-- Tarawih with rakaat count - Special handling after maghrib -->
+                        <div class="tarawih-notice-box">
+                            <div class="flex items-start gap-2">
+                                <i class="fas fa-info-circle mt-0.5"></i>
+                                <div>
+                                    <p class="font-medium mb-1">Catatan Khusus Tarawih</p>
+                                    <p>Jika diisi setelah waktu Maghrib, poin Tarawih akan masuk ke hari berikutnya (sesuai ketentuan bahwa Tarawih dilakukan setelah Isya).</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="p-3 rounded-lg bg-white/5 border border-teal-500/20">
                             <div class="flex items-center justify-between mb-2">
                                 <span class="text-sm text-slate-300 font-medium line-clamp-2">Tarawih</span>
@@ -1338,7 +1454,9 @@
             tempTodoImages: [],
             tempMemoryFile: null,
             tempMemorySource: null,
-            selectedDate: null // For editing historical data
+            selectedDate: null, // For editing historical data
+            editingTodoId: null, // For editing todo
+            editingTodoType: null // For editing todo
         };
         
         let currentMonth = new Date('2026-02-18');
@@ -1599,7 +1717,7 @@
         }
         
         function getFastingDateForData() {
-            // For regular amalan (except tahajud), use selected date or today at 00:00
+            // For regular amalan (except tarawih), use selected date or today at 00:00
             const selected = appData.selectedDate || new Date();
             // Reset to midnight
             const date = new Date(selected);
@@ -1607,8 +1725,8 @@
             return date.toDateString();
         }
         
-        function getTahajudDateForData() {
-            // Tahajud special handling: if after maghrib, goes to tomorrow
+        function getTarawihDateForData() {
+            // Tarawih special handling: if after maghrib, goes to tomorrow
             const selected = appData.selectedDate || new Date();
             
             // If editing historical date, just use that date
@@ -1755,7 +1873,7 @@
             };
             
             if (sunnahLainStatus.dhuha) total += 30;
-            // Tahajud points calculated separately based on its special date
+            if (sunnahLainStatus.tahajud) total += 100;
             if (sunnahLainStatus.taubat) total += 50;
             
             const tarawihCheck = document.getElementById('sunnah-tarawih');
@@ -1832,7 +1950,7 @@
         
         function autoSave() {
             const fastingDateStr = getFastingDateForData();
-            const tahajudDateStr = getTahajudDateForData();
+            const tarawihDateStr = getTarawihDateForData();
             
             // Get current values
             const isPuasa = document.getElementById('toggle-puasa').classList.contains('active');
@@ -1885,8 +2003,9 @@
             if (rawatibStatus.isyaQobliyah) score += 20;
             if (rawatibStatus.isyaBadiyah) score += 20;
             if (sunnahLainStatus.dhuha) score += 30;
+            if (sunnahLainStatus.tahajud) score += 100;
             if (sunnahLainStatus.taubat) score += 50;
-            if (isTarawih && tarawihRakaat > 0) score += Math.min(Math.floor((tarawihRakaat / 23) * 100), 100);
+            // Tarawih points calculated separately below
             
             // Ngaji points
             if (suratAwal !== '' && ayatAwal > 0 && ayatAkhir > 0) {
@@ -1919,19 +2038,15 @@
             });
             score += todoPoints;
             
-            // Save to fasting date (regular amalan)
+            // Save to fasting date (regular amalan, without tarawih)
             const dayData = {
                 date: fastingDateStr,
                 score: score,
                 puasa: isPuasa,
                 sholat: sholatStatus,
                 rawatib: rawatibStatus,
-                sunnahLain: {
-                    dhuha: sunnahLainStatus.dhuha,
-                    tahajud: false, // Tahajud saved separately
-                    taubat: sunnahLainStatus.taubat
-                },
-                tarawih: { done: isTarawih, rakaat: tarawihRakaat },
+                sunnahLain: sunnahLainStatus,
+                tarawih: { done: false, rakaat: 0 }, // Tarawih saved separately
                 ngaji: { 
                     suratAwal: suratAwal, 
                     ayatAwal: ayatAwal, 
@@ -1945,22 +2060,24 @@
             
             appData.history[fastingDateStr] = dayData;
             
-            // Save tahajud separately to its own date
-            if (sunnahLainStatus.tahajud) {
-                if (!appData.history[tahajudDateStr]) {
-                    appData.history[tahajudDateStr] = createEmptyDayData(tahajudDateStr);
+            // Save tarawih separately to its own date
+            if (isTarawih && tarawihRakaat > 0) {
+                if (!appData.history[tarawihDateStr]) {
+                    appData.history[tarawihDateStr] = createEmptyDayData(tarawihDateStr);
                 }
-                appData.history[tahajudDateStr].sunnahLain = appData.history[tahajudDateStr].sunnahLain || {};
-                appData.history[tahajudDateStr].sunnahLain.tahajud = true;
-                // Recalculate score for tahajud date
-                appData.history[tahajudDateStr].score = (appData.history[tahajudDateStr].score || 0) + 100;
+                appData.history[tarawihDateStr].tarawih = { done: true, rakaat: tarawihRakaat };
+                // Recalculate score for tarawih date
+                const tarawihPoints = Math.min(Math.floor((tarawihRakaat / 23) * 100), 100);
+                appData.history[tarawihDateStr].score = (appData.history[tarawihDateStr].score || 0) + tarawihPoints;
             } else {
-                // Remove tahajud if unchecked
-                if (appData.history[tahajudDateStr]) {
-                    const hadTahajud = appData.history[tahajudDateStr].sunnahLain?.tahajud;
-                    if (hadTahajud) {
-                        appData.history[tahajudDateStr].sunnahLain.tahajud = false;
-                        appData.history[tahajudDateStr].score = Math.max(0, (appData.history[tahajudDateStr].score || 0) - 100);
+                // Remove tarawih if unchecked
+                if (appData.history[tarawihDateStr]) {
+                    const hadTarawih = appData.history[tarawihDateStr].tarawih?.done;
+                    if (hadTarawih) {
+                        const oldRakaat = appData.history[tarawihDateStr].tarawih.rakaat || 0;
+                        const oldPoints = Math.min(Math.floor((oldRakaat / 23) * 100), 100);
+                        appData.history[tarawihDateStr].tarawih = { done: false, rakaat: 0 };
+                        appData.history[tarawihDateStr].score = Math.max(0, (appData.history[tarawihDateStr].score || 0) - oldPoints);
                     }
                 }
             }
@@ -2118,12 +2235,45 @@
             }
         }
         
-        function openTodoModal(type) {
+        function openTodoModal(type, editId = null) {
             currentTodoType = type;
-            document.getElementById('modal-title').textContent = type === 'reading' ? 'Tambah Target Bacaan' : 'Tambah Target Workout';
+            appData.editingTodoId = editId;
+            appData.editingTodoType = type;
+            
+            const title = editId ? 'Edit Target' : (type === 'reading' ? 'Tambah Target Bacaan' : 'Tambah Target Workout');
+            document.getElementById('modal-title').textContent = title;
+            
+            if (editId) {
+                // Load existing data
+                const todo = appData.todos[type].find(function(t) { return t.id === editId; });
+                if (todo) {
+                    document.getElementById('todo-title').value = todo.title;
+                    document.getElementById('todo-points').value = todo.points;
+                    document.getElementById('todo-desc').value = todo.description || '';
+                    setTodoFrequency(todo.frequency);
+                    
+                    // Set days if weekly
+                    if (todo.frequency === 'weekly' && todo.days) {
+                        document.querySelectorAll('#days-selector input').forEach(function(cb) {
+                            cb.checked = todo.days.includes(cb.value);
+                        });
+                    }
+                    
+                    // Load images
+                    appData.tempTodoImages = todo.images ? JSON.parse(JSON.stringify(todo.images)) : [];
+                    renderTodoImagePreview();
+                }
+            } else {
+                // Clear form for new entry
+                document.getElementById('todo-title').value = '';
+                document.getElementById('todo-points').value = '20';
+                document.getElementById('todo-desc').value = '';
+                setTodoFrequency('daily');
+                appData.tempTodoImages = [];
+                renderTodoImagePreview();
+            }
+            
             document.getElementById('todo-modal').classList.remove('hidden');
-            appData.tempTodoImages = [];
-            renderTodoImagePreview();
         }
         
         function closeTodoModal() {
@@ -2132,6 +2282,8 @@
             document.getElementById('todo-desc').value = '';
             document.getElementById('todo-points').value = '20';
             appData.tempTodoImages = [];
+            appData.editingTodoId = null;
+            appData.editingTodoType = null;
             renderTodoImagePreview();
         }
         
@@ -2234,22 +2386,82 @@
             
             if (!title) return;
             
-            const todo = {
-                id: Date.now(),
-                title: title,
-                points: points,
-                description: desc,
-                frequency: appData.todoFrequency,
-                days: appData.todoFrequency === 'weekly' ? Array.from(document.querySelectorAll('#days-selector input:checked')).map(function(cb) { return cb.value; }) : [0,1,2,3,4,5,6],
-                completed: {},
-                images: JSON.parse(JSON.stringify(appData.tempTodoImages)),
-                createdAt: new Date().toISOString()
-            };
+            if (appData.editingTodoId) {
+                // Update existing
+                const todo = appData.todos[appData.editingTodoType].find(function(t) { return t.id === appData.editingTodoId; });
+                if (todo) {
+                    todo.title = title;
+                    todo.points = points;
+                    todo.description = desc;
+                    todo.frequency = appData.todoFrequency;
+                    todo.days = appData.todoFrequency === 'weekly' ? Array.from(document.querySelectorAll('#days-selector input:checked')).map(function(cb) { return cb.value; }) : [0,1,2,3,4,5,6];
+                    todo.images = JSON.parse(JSON.stringify(appData.tempTodoImages));
+                }
+            } else {
+                // Create new
+                const todo = {
+                    id: Date.now(),
+                    title: title,
+                    points: points,
+                    description: desc,
+                    frequency: appData.todoFrequency,
+                    days: appData.todoFrequency === 'weekly' ? Array.from(document.querySelectorAll('#days-selector input:checked')).map(function(cb) { return cb.value; }) : [0,1,2,3,4,5,6],
+                    completed: {},
+                    images: JSON.parse(JSON.stringify(appData.tempTodoImages)),
+                    createdAt: new Date().toISOString()
+                };
+                appData.todos[currentTodoType].push(todo);
+            }
             
-            appData.todos[currentTodoType].push(todo);
             saveData();
             renderTodos();
             closeTodoModal();
+        }
+        
+        function editTodo(id, type) {
+            openTodoModal(type, id);
+        }
+        
+        function deleteTodo(id, type) {
+            showConfirmModal(
+                'Hapus Target?',
+                'Apakah kamu yakin ingin menghapus target ini? Tindakan ini tidak bisa dibatalkan.',
+                function() {
+                    appData.todos[type] = appData.todos[type].filter(function(t) { return t.id !== id; });
+                    saveData();
+                    renderTodos();
+                }
+            );
+        }
+        
+        function showConfirmModal(title, text, onConfirm) {
+            const modal = document.createElement('div');
+            modal.className = 'confirm-modal';
+            modal.id = 'confirm-modal';
+            modal.innerHTML = 
+                '<div class="confirm-modal-backdrop" onclick="closeConfirmModal()"></div>' +
+                '<div class="confirm-modal-content">' +
+                    '<h4 class="confirm-modal-title">' + title + '</h4>' +
+                    '<p class="confirm-modal-text">' + text + '</p>' +
+                    '<div class="confirm-modal-buttons">' +
+                        '<button class="confirm-modal-btn confirm-modal-cancel" onclick="closeConfirmModal()">Batal</button>' +
+                        '<button class="confirm-modal-btn confirm-modal-confirm" id="confirm-btn">Hapus</button>' +
+                    '</div>' +
+                '</div>';
+            
+            document.body.appendChild(modal);
+            
+            document.getElementById('confirm-btn').onclick = function() {
+                closeConfirmModal();
+                if (onConfirm) onConfirm();
+            };
+        }
+        
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirm-modal');
+            if (modal) {
+                modal.remove();
+            }
         }
         
         function renderTodos() {
@@ -2283,7 +2495,7 @@
                         todo.images.forEach(function(img, idx) {
                             imagesHtml += 
                                 '<div class="aspect-square rounded-lg overflow-hidden bg-slate-800 relative group">' +
-                                    '<img src="' + img.src + '" class="w-full h-full object-cover cursor-pointer" onclick="showTodoImageModal(' + todo.id + ', ' + idx + ')">' +
+                                    '<img src="' + img.src + '" class="w-full h-full object-cover cursor-pointer" onclick="showTodoImageModal(' + todo.id + ', ' + idx + ', \'' + type + '\')">' +
                                     (img.desc ? '<div class="absolute bottom-0 left-0 right-0 bg-black/60 p-1 text-[10px] text-white truncate px-2">' + img.desc + '</div>' : '') +
                                 '</div>';
                         });
@@ -2302,9 +2514,17 @@
                                     (todo.description ? '<p class="text-xs text-slate-400 mt-1 line-clamp-2">' + todo.description + '</p>' : '') +
                                     '<p class="text-xs ' + (type === 'reading' ? 'text-purple-400' : 'text-amber-400') + ' mt-2">+' + todo.points + ' poin</p>' +
                                 '</div>' +
-                                '<button onclick="toggleTodoCheck(' + todo.id + ', \'' + type + '\')" class="w-8 h-8 rounded-full ' + (isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-400') + ' flex items-center justify-center transition flex-shrink-0 ml-2">' +
-                                    '<i class="fas fa-check text-sm"></i>' +
-                                '</button>' +
+                                '<div class="flex items-center gap-2 ml-2">' +
+                                    '<button onclick="editTodo(' + todo.id + ', \'' + type + '\')" class="todo-action-btn todo-edit-btn" title="Edit">' +
+                                        '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '<button onclick="deleteTodo(' + todo.id + ', \'' + type + '\')" class="todo-action-btn todo-delete-btn" title="Hapus">' +
+                                        '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '<button onclick="toggleTodoCheck(' + todo.id + ', \'' + type + '\')" class="w-8 h-8 rounded-full ' + (isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-400') + ' flex items-center justify-center transition flex-shrink-0">' +
+                                        '<i class="fas fa-check text-sm"></i>' +
+                                    '</button>' +
+                                '</div>' +
                             '</div>' +
                         '</div>' +
                         imagesHtml;
@@ -2327,9 +2547,8 @@
             }
         }
         
-        function showTodoImageModal(todoId, imgIdx) {
-            const todo = appData.todos.reading.find(function(t) { return t.id === todoId; }) || 
-                        appData.todos.workout.find(function(t) { return t.id === todoId; });
+        function showTodoImageModal(todoId, imgIdx, type) {
+            const todo = appData.todos[type].find(function(t) { return t.id === todoId; });
             if (!todo || !todo.images[imgIdx]) return;
             
             const img = todo.images[imgIdx];
@@ -2709,11 +2928,11 @@
         }
         
         function saveData() {
-            localStorage.setItem('ramadanApp2026_v6', JSON.stringify(appData));
+            localStorage.setItem('ramadanApp2026_v7', JSON.stringify(appData));
         }
         
         function loadData() {
-            const saved = localStorage.getItem('ramadanApp2026_v6');
+            const saved = localStorage.getItem('ramadanApp2026_v7');
             if (saved) {
                 appData = JSON.parse(saved);
             }
